@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<div class="h1">Auth apply</div>
+{% endblock %}
+
+{% block content %}
+<a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+{% for instance in instances %}
+{% for param in instance %}
+{% if param.address %}
+<p>登録施設情報</p>
+<p>{{ param.address }}</p>
+<p>{{ param.description }}</p>
+<p>{{ param.date }}</p>
+<p>イメージ図</p>
+{%elif param.image %}
+<img src="{{ param.image.url }}">
+{% else %}
+<a href="{% url 'matching:cancel_apply' %}?param={{ param }}" class="btn btn-primary">Cancel</a>
+<br>
+{% endif %}
+{% endfor %}
+<p>-----------------------------------------</p>
+<br>
+{% endfor %}
+{% endblock %}

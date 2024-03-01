@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if user.is_authenticated %}
+<div class="h1">MyPage</div>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="h2">Welcome {{ user.username }}</div>
+<img src="{{ user.image.url }}" alt="image">
+<br>
+<a href="{% url 'registration:update' user.pk %}" class="btn btn-primary">Update</a>
+<br>
+<a href="{% url 'registration:logout' %}" class="btn btn-primary">Logout</a>
+<br>
+<a href="{% url 'crudinn:register_inn' %}" class="btn btn-primary">RegisterInn</a>
+<br>
+<a href="{% url 'matching:search_inn' %}" class="btn btn-primary">SearchInn</a>
+<br>
+<a href="{% url 'matching:applied_inn' %}" class="btn btn-primary">AppliedInn</a>
+<br>
+<a href="{% url 'matching:auth_apply' %}" class="btn btn-primary">AuthApply</a>
+<br>
+{% for instance in instances %}
+{% for param in instance %}
+{% if param.address %}
+<p>登録施設情報</p>
+<p>{{ param.address }}</p>
+<p>{{ param.description }}</p>
+<p>{{ param.date }}</p>
+<a href="{% url 'crudinn:update_inn' %}?param={{ param.pk }}" class="btn btn-primary">更新</a>
+<a href="{% url 'crudinn:delete_inn' %}?param={{ param.pk }}" class="btn btn-primary">削除</a>
+<p>イメージ図</p>
+{% else %}
+<img src="{{ param.image.url }}">
+{% endif %}
+{% endfor %}
+<p>-----------------------------------------</p>
+<br>
+{% endfor %}
+{% if apply_inn_instances %}
+<div>
+    <p>予約された施設</p>
+    {% for apply_inn_instance in apply_inn_instances %}
+    <p>{{ apply_inn_instance.inn_id.address }}</p>
+    <p>{{ apply_inn_instance.inn_id.description }}</p>
+    <p>{{ apply_inn_instance.inn_id.date }}</p>
+    <p>{{ apply_inn_instance.guest }}</p>
+    <p>{{ apply_inn_instance.phone_num }}</p>
+    <p>{{ apply_inn_instance.info }}</p>
+    <a href="{% url 'matching:permit_apply' %}?param={{ apply_inn_instance.pk }}" class="btn btn-primary">受け入れる</a>
+    {% endfor %}
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}
