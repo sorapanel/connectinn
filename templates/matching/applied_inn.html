@@ -1,25 +1,32 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Applied inn</div>
+<h1 class="font-weight-bold" style="margin-top: 60px;">予約情報の確認（ホスト側）</h1>
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+<div style="padding: 30px;">
+    <a href="{% url 'registration:index' %}" class="back-a">ホームへ</a>
+</div>
+<br>
 {% for param in params %}
-<p>宿泊情報</p>
-<p>{{ param.address }}</p>
-<p>{{ param.description }}</p>
-<p>{{ param.date }}</p>
-<br>
-<p>相手情報</p>
-<p>{{ param.username }}</p>
-<p>{{ param.phone_num }}</p>
-<p>{{ param.info }}</p>
-<img src="{{ param.image.url }}">
-<br>
-<a href="{% url 'matching:cancel_apply' %}?param={{ param.pk }}" class="btn btn-primary">Cancel</a>
-<p>-----------------------------------------</p>
+<div class="inn-contents">
+    <p>宿泊情報</p>
+    <p>住所：{{ param.address }}</p>
+    <p>詳細：{{ param.description }}</p>
+    <p>日付：{{ param.date }}</p>
+    <br>
+    <p>相手情報</p>
+    <p>ユーザ名：{{ param.username }}</p>
+    <p>電話番号：{{ param.phone_num }}</p>
+    <p>備考：{{ param.info }}</p>
+    <p>トプ画</p>
+    <img src="{{ param.image.url }}">
+    <br>
+    <div style="padding: 15px;">
+        <a href="{% url 'matching:cancel_apply' %}?param={{ param.pk }}" class="delete-a">取り消す</a>
+    </div>
+</div>
 <br>
 {% endfor %}
 {% endblock %}

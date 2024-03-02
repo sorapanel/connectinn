@@ -11,11 +11,11 @@ class CustomPhoneNumField(forms.CharField):
             raise forms.ValidationError('Enter a valid phone number (e.g. 080-0000-0000).')
 
 class ApplyInnForm(forms.Form):
-    info = forms.CharField(required=True, max_length=500,)
-    phone_num = CustomPhoneNumField(required=True,)
+    info = forms.CharField(label="備考", required=True, max_length=500, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    phone_num = CustomPhoneNumField(label="電話番号（○○○-○○○○-○○○○形式）", required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 class SendForm(forms.Form):
-    content = forms.CharField(required=True, max_length=500,)
+    content = forms.CharField(label="メッセージ", required=True, max_length=500, widget=forms.TextInput(attrs={'class': 'form-control'}))
 
 class SearchForm(forms.Form):
-    address = forms.CharField(max_length=500,)
+    address = forms.CharField(label="住所検索欄", max_length=500, widget=forms.TextInput(attrs={'class': 'form-control'}))

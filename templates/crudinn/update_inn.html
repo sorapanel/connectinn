@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Update inn</div>
+<h1 class="font-weight-bold" style="margin-top: 60px;">施設を修正する</h1>
 {% endblock %}
 
 {% block content %}
-<div>
+<div class="form-style">
     <br>
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
@@ -18,16 +18,20 @@
         {% endfor %}
         <input type="hidden" name="inn_id" value="{{ inn_id }}">
         <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Update</button>
-            <a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+            <button type="submit" class="add-button">更新する</button>
+            <a href="{% url 'registration:index' %}" class="back-a">ホームへ</a>
         </div>
     </form>
 </div>
 <br>
-<div>
+<h1 style="margin-bottom: 30px; text-align: center; color: #3498db;">画像情報</h1>
+<div class="content">
     {% for inn_images_instance in inn_images_instances %}
-    <img src="{{ inn_images_instance.image.url }}">
-    <a href="{% url 'crudinn:delete_image' %}?param={{ inn_images_instance.pk }}" class="btn btn-primary">削除</a>
+    <div>
+        <img src="{{ inn_images_instance.image.url }}" style="margin: 30px;">
+        <br>
+        <a href="{% url 'crudinn:delete_image' %}?param={{ inn_images_instance.pk }}" class="delete-a">削除する</a>
+    </div>
     {% endfor %}
 </div>
 {% endblock %}

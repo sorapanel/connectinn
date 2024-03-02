@@ -1,27 +1,33 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Auth apply</div>
+<h1 class="font-weight-bold" style="margin-top: 60px;">予約情報の確認（旅行者側）</h1>
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+<div style="padding: 30px;">
+    <a href="{% url 'registration:index' %}" class="back-a">ホームへ</a>
+</div>
+<br>
 {% for instance in instances %}
 {% for param in instance %}
 {% if param.address %}
-<p>登録施設情報</p>
-<p>{{ param.address }}</p>
-<p>{{ param.description }}</p>
-<p>{{ param.date }}</p>
-<p>イメージ図</p>
-{%elif param.image %}
-<img src="{{ param.image.url }}">
-{% else %}
-<a href="{% url 'matching:cancel_apply' %}?param={{ param }}" class="btn btn-primary">Cancel</a>
-<br>
-{% endif %}
-{% endfor %}
-<p>-----------------------------------------</p>
+<div class="inn-contents">
+    <p>登録施設情報</p>
+    <p>住所：{{ param.address }}</p>
+    <p>詳細：{{ param.description }}</p>
+    <p>日付：{{ param.date }}</p>
+    <div style="padding: 15px;">
+        <a href="{% url 'matching:cancel_apply' %}?param={{ param }}" class="delete-a">取り消す</a>
+    </div>
+    <br>
+    <p>イメージ図</p>
+    {%elif param.image %}
+    <img src="{{ param.image.url }}">
+    {% else %}
+    {% endif %}
+    {% endfor %}
+</div>
 <br>
 {% endfor %}
 {% endblock %}

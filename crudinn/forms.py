@@ -7,7 +7,7 @@ class MultipleFileInput(forms.ClearableFileInput):
 
 class MultipleFileField(forms.FileField):
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault("widget", MultipleFileInput())
+        kwargs.setdefault("widget", MultipleFileInput(attrs={'class': 'form-control'}))
         super().__init__(*args, **kwargs)
 
     def clean(self, data, initial=None):
@@ -20,15 +20,15 @@ class MultipleFileField(forms.FileField):
 
 
 class InnForm(forms.Form):
-    address = forms.CharField(label="住所",required=True,)
+    address = forms.CharField(label="住所",required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     anonymization = forms.BooleanField(label="住所を隠す（県名と市名のみ表示）", required=False, initial=False,)
-    description = forms.CharField(label="詳細", required=True)
+    description = forms.CharField(label="詳細", required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     date = forms.DateField(label="日付", required=True, input_formats=['%Y-%m-%d'], widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'min':timezone.localdate(),}))
-    images = MultipleFileField(label="写真", required=True)
+    images = MultipleFileField(label="写真", required=True,)
 
 class InnUpdateForm(forms.Form):
-    address = forms.CharField(label="住所",required=True,)
+    address = forms.CharField(label="住所",required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     anonymization = forms.BooleanField(label="住所を隠す（県名と市名のみ表示）", required=False, initial=False,)
-    description = forms.CharField(label="詳細", required=True)
+    description = forms.CharField(label="詳細", required=True, widget=forms.TextInput(attrs={'class': 'form-control'}))
     date = forms.DateField(label="日付", required=True, input_formats=['%Y-%m-%d'], widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'date', 'min':timezone.localdate(),}))
-    images = MultipleFileField(label="写真", required=False)
+    images = MultipleFileField(label="写真", required=False,)

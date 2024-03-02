@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.views.generic import TemplateView, CreateView
-from .forms import SignUpForm,LoginForm
+from .forms import SignUpForm,LoginForm, UpdateForm
 from django.urls import reverse_lazy
 from django.views.generic.edit import UpdateView
 from .models import CustomUser
@@ -26,6 +26,7 @@ class IndexView(TemplateView):
         inn_instances = []
         inn_images = []
         inn_images_instances = []
+        flag = False
 
         if username is not None:
             user_instance = CustomUser.objects.get(username=username["username"])
@@ -39,7 +40,10 @@ class IndexView(TemplateView):
                 inn_images_instances.append(inn_images)
                 inn_images = []
                 
-        return render(request, "registration/index.html", {"instances": inn_images_instances, "apply_inn_instances":apply_inn_instaces,})
+        if len(inn_images_instances) == 0:
+            flag = True
+
+        return render(request, "registration/index.html", {"instances": inn_images_instances, "apply_inn_instances":apply_inn_instaces, "is_inn":flag,})
             
 
 
@@ -116,7 +120,7 @@ def LogoutView(request):
 
 class UserUpdateView(UpdateView):
     model = CustomUser
-    fields = ('username', 'email', 'last_name', 'first_name', 'image')
+    form_class = UpdateForm
     template_name_suffix = "update"
     success_url = reverse_lazy('registration:index')
 

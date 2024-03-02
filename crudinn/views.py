@@ -10,6 +10,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 from .models import InnModel, InnImageModel
 from registration.models import CustomUser
+from matching.views import customUrl
 
 # Create your views here.
 class RegisterInn(TemplateView):
@@ -77,9 +78,9 @@ def deleteImage(request):
     inn_images_instance = InnImageModel.objects.get(pk=param)
     inn_images_instances = InnImageModel.objects.filter(inn_image_id=inn_images_instance.inn_image_id)
     if inn_images_instances.count() == 1:
-        return redirect("registration:index")
+        return redirect(customUrl(inn_images_instance.inn_image_id.inn_id, "crudinn:update_inn"))
     inn_images_instance.delete()
-    return redirect("registration:index")
+    return redirect(customUrl(inn_images_instance.inn_image_id.inn_id, "crudinn:update_inn"))
 
 class UpdateInn(TemplateView):
     template_name = "crudinn/update_inn.html"
