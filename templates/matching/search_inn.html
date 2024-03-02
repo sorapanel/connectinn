@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Search inn</div>
+<h1 class="font-weight-bold" style="margin-top: 60px;">施設を検索する</h1>
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+<div style="padding: 30px;">
+    <a href="{% url 'registration:index' %}" class="back-a">ホームへ</a>
+</div>
 <br>
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -14,27 +16,30 @@
     {{ field.label }}
     {{ field }}
     {{ field.errors }}
-    <br>
     {% endfor %}
     <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="submit" class="add-button">検索する</button>
     </div>
 </form>
 {% for instance in instances %}
 {% for param in instance %}
 {% if param.address %}
-<p>宿泊情報</p>
-<p>{{ param.username }}</p>
-<p>{{ param.address }}</p>
-<p>{{ param.description }}</p>
-<p>{{ param.date }}</p>
-<a href="{% url 'matching:apply_inn' %}?param={{ param.pk }}" class="btn btn-primary">Apply</a>
-<p>イメージ図</p>
-{% else %}
-<img src="{{ param.image.url }}">
-{% endif %}
-{% endfor %}
-<p>-----------------------------------------</p>
+<div class="inn-contents">
+    <p>宿泊情報</p>
+    <p>提供者：{{ param.username }}</p>
+    <p>住所：{{ param.address }}</p>
+    <p>詳細：{{ param.description }}</p>
+    <p>日付：{{ param.date }}</p>
+    <div style="padding: 10px;">
+        <a href="{% url 'matching:apply_inn' %}?param={{ param.pk }}" class="add-button">申し込む</a>
+    </div>
+    <br>
+    <p>施設イメージ</p>
+    {% else %}
+    <img src="{{ param.image.url }}">
+    {% endif %}
+    {% endfor %}
+</div>
 <br>
 {% endfor %}
 {% endblock %}

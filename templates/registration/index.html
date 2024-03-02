@@ -2,57 +2,74 @@
 
 {% block title %}
 {% if user.is_authenticated %}
-<div class="h1">MyPage</div>
+<div class="h1" style="color: #3498db; padding-top: 30px;">マイページ</div>
 {% endif %}
 {% endblock %}
 
 {% block content %}
 {% if user.is_authenticated %}
-<div class="h2">Welcome {{ user.username }}</div>
-<img src="{{ user.image.url }}" alt="image">
-<br>
-<a href="{% url 'registration:update' user.pk %}" class="btn btn-primary">Update</a>
-<br>
-<a href="{% url 'registration:logout' %}" class="btn btn-primary">Logout</a>
-<br>
-<a href="{% url 'crudinn:register_inn' %}" class="btn btn-primary">RegisterInn</a>
-<br>
-<a href="{% url 'matching:search_inn' %}" class="btn btn-primary">SearchInn</a>
-<br>
-<a href="{% url 'matching:applied_inn' %}" class="btn btn-primary">AppliedInn</a>
-<br>
-<a href="{% url 'matching:auth_apply' %}" class="btn btn-primary">AuthApply</a>
-<br>
-{% for instance in instances %}
-{% for param in instance %}
-{% if param.address %}
-<p>登録施設情報</p>
-<p>{{ param.address }}</p>
-<p>{{ param.description }}</p>
-<p>{{ param.date }}</p>
-<a href="{% url 'crudinn:update_inn' %}?param={{ param.pk }}" class="btn btn-primary">更新</a>
-<a href="{% url 'crudinn:delete_inn' %}?param={{ param.pk }}" class="btn btn-primary">削除</a>
-<p>イメージ図</p>
-{% else %}
-<img src="{{ param.image.url }}">
-{% endif %}
-{% endfor %}
-<p>-----------------------------------------</p>
-<br>
-{% endfor %}
-{% if apply_inn_instances %}
-<div>
-    <p>予約された施設</p>
-    {% for apply_inn_instance in apply_inn_instances %}
-    <p>{{ apply_inn_instance.inn_id.address }}</p>
-    <p>{{ apply_inn_instance.inn_id.description }}</p>
-    <p>{{ apply_inn_instance.inn_id.date }}</p>
-    <p>{{ apply_inn_instance.guest }}</p>
-    <p>{{ apply_inn_instance.phone_num }}</p>
-    <p>{{ apply_inn_instance.info }}</p>
-    <a href="{% url 'matching:permit_apply' %}?param={{ apply_inn_instance.pk }}" class="btn btn-primary">受け入れる</a>
-    {% endfor %}
+<div class="h2" style="color: #3498db;">ようこそ！ {{ user.username }}</div>
+<div style="margin: 30px 0px;">
+    <img src="{{ user.image.url }}" alt="image">
 </div>
-{% endif %}
+<br>
+<div>
+    <div>
+        <div class="h2" style="color: #3498db;">登録された施設</div>
+    </div>
+    {% if is_inn %}
+    <div>
+        <p>登録された施設はありません</p>
+    </div>
+    {% endif %}
+    {% for instance in instances %}
+    <div class="inn-contents">
+        {% for param in instance %}
+        {% if param.address %}
+        <p>登録施設情報</p>
+        <p>住所：{{ param.address }}</p>
+        <p>詳細：{{ param.description }}</p>
+        <p>日付：{{ param.date }}</p>
+        <div style="margin: 15px;">
+            <a href="{% url 'crudinn:update_inn' %}?param={{ param.pk }}" class="add-button"
+                style="white-space: nowrap;">更新する</a>
+            <br>
+            <br>
+            <a href="{% url 'crudinn:delete_inn' %}?param={{ param.pk }}" class="delete-a"
+                style="white-space: nowrap;">削除する</a>
+        </div>
+        <p>施設イメージ図</p>
+        {% elif param.image %}
+        <img src="{{ param.image.url }}">
+        {% endif %}
+        {% endfor %}
+    </div>
+    <br>
+    {% endfor %}
+    <div>
+        <div class="h2" style="color: #3498db;">登録された施設</div>
+    </div>
+    {% if apply_inn_instances %}
+    <div class="inn-contents">
+        <p>申請された施設</p>
+        {% for apply_inn_instance in apply_inn_instances %}
+        <p>住所：{{ apply_inn_instance.inn_id.address }}</p>
+        <p>詳細：{{ apply_inn_instance.inn_id.description }}</p>
+        <p>日付：{{ apply_inn_instance.inn_id.date }}</p>
+        <p>旅行者ユーザ名：{{ apply_inn_instance.guest }}</p>
+        <p>旅行者電話番号：{{ apply_inn_instance.phone_num }}</p>
+        <p>旅行者備考：{{ apply_inn_instance.info }}</p>
+        <a href="{% url 'matching:permit_apply' %}?param={{ apply_inn_instance.pk }}" class="add-button">認証する</a>
+        <br>
+        <br>
+        <a href="{% url 'matching:cancel_apply' %}?param={{ apply_inn_instance.pk }}" class="delete-a">取り消す</a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div>
+        <p>申請された施設はありません</p>
+    </div>
+    {% endif %}
+</div>
 {% endif %}
 {% endblock %}

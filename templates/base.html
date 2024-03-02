@@ -11,6 +11,92 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <title>Connectinn</title>
+    <style>
+        .form-style {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            text-align: left;
+        }
+
+        .add-button {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: bold;
+            border: 2px solid #3498db;
+            padding: 10px 35px;
+            border-radius: 5px;
+            margin: 20px 30px;
+            background-color: white;
+        }
+
+        .add-button:hover {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .back-a {
+            text-decoration: none;
+            color: #787878;
+            font-weight: bold;
+            border: 2px solid #2a2a2a;
+            padding: 12px 37px;
+            border-radius: 5px;
+            margin: 20px 30px;
+        }
+
+        .delete-a {
+            text-decoration: none;
+            color: #dd3333;
+            font-weight: bold;
+            border: 2px solid #960101;
+            padding: 12px 37px;
+            border-radius: 5px;
+            margin: 20px 30px;
+        }
+
+        .delete-a:hover {
+            background-color: #960101;
+            color: white;
+        }
+
+        .back-a:hover {
+            background-color: #474747;
+            color: white;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #3498db;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column;
+        }
+
+        .chat-wrapper {
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            color: white;
+            background-color: #3498db;
+        }
+
+        .chat-home-cotent {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .inn-contents {
+            border: 8px solid #3498db;
+            padding: 12px 37px;
+            border-radius: 5px;
+            margin: 20px 30px;
+        }
+    </style>
 </head>
 
 <body>
@@ -27,7 +113,25 @@
                     <a class="nav-link" href="{% url 'registration:index' %}">ホーム画面</a>
                 </li>
                 <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'crudinn:register_inn' %}">施設登録する</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'matching:search_inn' %}">施設を探す</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'matching:applied_inn' %}">予約情報の確認（ホスト側）</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'matching:auth_apply' %}">予約情報の確認（旅行者側）</a>
+                </li>
+                <li class="nav-item active">
                     <a class="nav-link" href="{% url 'matching:chat_home' %}">チャット画面</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'registration:update' user.pk %}">ユーザ情報の修正</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'registration:logout' %}">ログアウト</a>
                 </li>
             </ul>
         </div>

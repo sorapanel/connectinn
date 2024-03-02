@@ -1,37 +1,39 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Apply inn</div>
+<h1 class="font-weight-bold" style="margin-bottom: 40px; margin-top: 20px;">予約情報の入力</h1>
 {% endblock %}
 
 {% block content %}
-<p>宿泊情報</p>
-<p>{{ inn_instance.username }}</p>
-<p>{{ inn_instance.address }}</p>
-<p>{{ inn_instance.description }}</p>
-<p>{{ inn_instance.date }}</p>
-<p>イメージ図</p>
-{% for inn_images_instance in inn_images_instances %}
-<img src="{{ inn_images_instance.image.url }}">
-{% endfor %}
-<p>-----------------------------------------</p>
-<br>
+<div style="margin-bottom: 50px;">
+    <p>宿泊情報</p>
+    <p>ユーザ名：{{ inn_instance.username }}</p>
+    <p>住所：{{ inn_instance.address }}</p>
+    <p>詳細：{{ inn_instance.description }}</p>
+    <p>日付：{{ inn_instance.date }}</p>
+    <p>イメージ図</p>
+    {% for inn_images_instance in inn_images_instances %}
+    <img src="{{ inn_images_instance.image.url }}">
+    {% endfor %}
+</div>
 <div>
-    <br>
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.non_field_errors }}
-        {% for field in form %}
-        {{ field.label }}
-        {{ field }}
-        {{ field.errors }}
-        <br>
-        {% endfor %}
-        <input type="hidden" name="inn_id" value="{{ inn_instance.inn_id }}">
-        <div class="mt-3">
-            <button type="submit" class="btn btn-primary">Apply</button>
-            <a href="{% url 'matching:search_inn' %}" class="btn btn-secondary">Back</a>
-        </div>
-    </form>
+    <p>予約情報</p>
+    <div class="form-style">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            {% for field in form %}
+            {{ field.label }}
+            {{ field }}
+            {{ field.errors }}
+            <br>
+            {% endfor %}
+            <input type="hidden" name="inn_id" value="{{ inn_instance.inn_id }}">
+            <div class="mt-3">
+                <button type="submit" class="add-button">申し込む</button>
+                <a href="{% url 'matching:search_inn' %}" class="back-a">施設検索</a>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock %}

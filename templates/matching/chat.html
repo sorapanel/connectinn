@@ -1,23 +1,27 @@
 {% extends 'base.html' %}
 
 {% block title %}
-<div class="h1">Chat Home</div>
+<h1 class="font-weight-bold" style="margin-bottom: 40px; margin-top: 20px;">チャット</h1>
 {% endblock %}
 
 {% block content %}
-<a href="{% url 'registration:index' %}" class="btn btn-secondary">Back</a>
+<div style="padding: 35px;">
+    <a href="{% url 'registration:index' %}" class="back-a">ホームへ</a>
+</div>
 <br>
-{% for chat in chats %}
-{% if chat.user1 == user %}
-<img src="{{ chat.user2.image.url }}" alt="image">
-<p>{{ chat.user2.username }}</p>
-<a href="{% url 'matching:chat' %}?param={{ chat.chat_id }}" class="btn btn-primary">talk</a>
-{% else %}
-<img src="{{ chat.user1.image.url }}" alt="image">
-<p>{{ chat.user1.username }}</p>
-<a href="{% url 'matching:chat' %}?param={{ chat.chat_id }}" class="btn btn-primary">talk</a>
-{% endif %}
-<p>-----------------------------------------</p>
-<br>
-{% endfor %}
+<div class="chat-home-cotent">
+    {% for chat in chats %}
+    <div>
+        {% if chat.user1 == user %}
+        <img src="{{ chat.user2.image.url }}" alt="image">
+        <p>{{ chat.user2.username }}</p>
+        <a href="{% url 'matching:chat' %}?param={{ chat.chat_id }}" class="add-button">talk</a>
+        {% else %}
+        <img src="{{ chat.user1.image.url }}" alt="image">
+        <p>{{ chat.user1.username }}</p>
+        <a href="{% url 'matching:chat' %}?param={{ chat.chat_id }}" class="add-button">talk</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}
