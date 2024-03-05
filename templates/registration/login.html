@@ -63,6 +63,7 @@
 <body>
     <h1 class="font-weight-bold">ログイン画面</h1>
     <div>
+        <p>{{ message }}</p>
         <br>
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}

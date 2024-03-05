@@ -105,14 +105,14 @@ class LoginView(TemplateView):
                     return redirect('registration:index')
                 else:
                     message="アカウントが有効ではありません。"
-                    return render(request, "login.html", {'form': form, 'message':message})
+                    return render(request, "registration/login.html", {'form': form, 'message':message})
                 
             else:
                 message="ユーザ名またはパスワードが間違っています。"
-                return render(request, "login.html", {'form': form, 'message':message})
+                return render(request, "registration/login.html", {'form': form, 'message':message})
         else:
             message="フォームが無効です。"
-            return render(request, "login.html", {'form': form, 'message':message})
+            return render(request, "registration/login.html", {'form': form, 'message':message})
     
 def LogoutView(request):
     logout(request)
