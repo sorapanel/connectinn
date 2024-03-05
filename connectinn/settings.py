@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crudinn',
     'matching',
-    'storages',
 ]
 
 AUTH_USER_MODEL = "registration.CustomUser"
